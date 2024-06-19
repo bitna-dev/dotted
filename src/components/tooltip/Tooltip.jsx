@@ -1,7 +1,26 @@
-import React from 'react'
+import styles from './Tooltip.module.scss'
+const Tooltip = ({
+  color = '',
+  bgColor = '',
+  orientation,
+  message,
+  ...restProps
+}) => {
+  const style = {
+    color,
+    backgroundColor: bgColor,
+  }
 
-const Tooltip = () => {
-  return <div>Tooltip</div>
+  return (
+    <span
+      role="tooltip"
+      style={style}
+      {...restProps}
+      className={styles.tooltip}
+    >
+      {message}
+    </span>
+  )
 }
 
 export default Tooltip

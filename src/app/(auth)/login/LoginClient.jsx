@@ -7,6 +7,7 @@ import Image from 'next/image'
 import LogoPath from '@assets/colorful.svg'
 import { useRouter } from 'next/navigation'
 import Input from '@components/input/Input'
+import AutoSignInCheckbox from '@/components/autoSiginInCheckbox/AutoSignInCheckbox'
 
 const LoginClient = () => {
   const router = useRouter()
@@ -31,6 +32,9 @@ const LoginClient = () => {
   const redirectUser = () => {
     router.push('/')
   }
+
+  // 자동로그인
+  const [isAutoLogin, setIsAutoLogin] = useState(false)
   return (
     <>
       {isLoading && <Loader />}
@@ -66,7 +70,14 @@ const LoginClient = () => {
                 setValues({ ...values, [e.target.name]: e.target.value })
               }
             />
-            <div className={styles.group}>auto login</div>
+            <div className={styles.group}>
+              <AutoSignInCheckbox
+                checked={isAutoLogin}
+                onChange={(e) => {
+                  setIsAutoLogin(e.target.checked)
+                }}
+              />
+            </div>
             <div className={styles.buttonGroup}>
               <div>BUTTON</div>
             </div>
