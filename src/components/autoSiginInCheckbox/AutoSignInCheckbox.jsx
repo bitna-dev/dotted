@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './AutoSignInCheckbox.module.scss'
-import Checkbox from '@components/checkbox/Checkbox'
+import Checkbox from '@components/Checkbox'
 import Tooltip from '../tooltip/Tooltip'
 const AutoSignInCheckbox = ({
   label = '자동 로그인',

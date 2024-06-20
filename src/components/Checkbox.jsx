@@ -10,7 +10,7 @@ const Checkbox = ({ label, checked, disabled, onChange, ...restProps }) => {
         onChange={onChange}
         {...restProps}
       />
-      <label>{label}</label>
+      <label style={{ color: 'var(--dark-gray)' }}>{label}</label>
     </div>
   )
 }

@@ -22,7 +22,7 @@ const Input = ({
     if (name === 'email') {
       return 'email'
     }
-    if (name === 'password') {
+    if (name === 'password' || name === 'c_password') {
       return isPasswordVisible ? 'text' : 'password'
     }
     return 'text'
@@ -66,7 +66,7 @@ const Input = ({
           onChange={handleChange}
           {...restProps}
         />
-        {name === 'password' ? (
+        {(name === 'password') | (name === 'c_password') ? (
           <button
             type="button"
             className={styles.button}

@@ -1,13 +1,23 @@
 'use client'
 
-import Loader from '@/components/loader/Loader'
+import Loader from '@components/loader/Loader'
 import { useState } from 'react'
 import styles from './Auth.module.scss'
 import Image from 'next/image'
 import LogoPath from '@assets/colorful.svg'
 import { useRouter } from 'next/navigation'
 import Input from '@components/input/Input'
-import AutoSignInCheckbox from '@/components/autoSiginInCheckbox/AutoSignInCheckbox'
+import AutoSignInCheckbox from '@components/autoSiginInCheckbox/AutoSignInCheckbox'
+import Divider from '@components/divider/Divider'
+import Button from '@components/button/Button'
+import Link from 'next/link'
+import { auth } from '@firebase/index'
+import { toast } from 'react-toastify'
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from 'firebase/auth'
 
 const LoginClient = () => {
   const router = useRouter()
@@ -19,13 +29,34 @@ const LoginClient = () => {
   })
 
   // EMAIL LOGIN
-  const loginUser = (e) => {
+  const loginUser = async (e) => {
     e.preventDefault()
+    const { email, password } = values
+    console.log(email, password)
+    try {
+      await signInWithEmailAndPassword(auth, email, password).then((user) => {
+        console.log(user)
+        toast.success(`${user.displayName}님 환영합니다.`)
+        redirectUser()
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   //   GOOGLE LOGIN
-  const signInWithGoogle = (e) => {
-    e.preventDefault()
+  const signInWithGoogle = async () => {
+    const provider = new GoogleAuthProvider()
+    try {
+      await signInWithPopup(auth, provider).then((res) => {
+        console.log(res)
+        const user = GoogleAuthProvider.credentialFromResult(res)
+        toast.success(`${user.displayName}님 환영합니다.`)
+        redirectUser()
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   //   REDIRECT
@@ -50,7 +81,7 @@ const LoginClient = () => {
               icon="letter"
               id="email"
               name="email"
-              label="email"
+              label="이메일"
               placeholder="이메일을 입력해주세요."
               className={styles.control}
               value={values.email}
@@ -62,7 +93,7 @@ const LoginClient = () => {
               icon="lock"
               id="password"
               name="password"
-              label="password"
+              label="비밀번호"
               placeholder="비밀번호를 입력해주세요."
               className={styles.control}
               value={values.password}
@@ -77,9 +108,22 @@ const LoginClient = () => {
                   setIsAutoLogin(e.target.checked)
                 }}
               />
+              <div className={styles.linksWrapper}>
+                <div className={styles.links}>
+                  <Link href="/reset">비밀번호를 잊으셨나요?</Link>
+                </div>
+                <div className={styles.links}>
+                  <Link href="/register">아직 계정이 없으신가요?</Link>
+                </div>
+              </div>
             </div>
+
             <div className={styles.buttonGroup}>
-              <div>BUTTON</div>
+              <Button type="submit">로그인</Button>
+              <Divider />
+              <Button secondary onClick={signInWithGoogle}>
+                구글로그인
+              </Button>
             </div>
           </form>
         </div>

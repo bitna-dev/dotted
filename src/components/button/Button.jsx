@@ -1,7 +1,31 @@
-import React from 'react'
+import classNames from 'classnames'
+import styles from './Button.module.scss'
 
-const Button = () => {
-  return <div>Button</div>
+const Button = ({
+  type = 'button',
+  secondary = false,
+  bgColor,
+  fgColor,
+  width = '100%',
+  ...restProps
+}) => {
+  const composeClasses = classNames(
+    styles.button,
+    secondary ? styles.secondary : styles.primary,
+  )
+  const style = {
+    backgroundColor: bgColor || '',
+    color: fgColor || '',
+    width: width || '',
+  }
+  return (
+    <button
+      type={type}
+      style={style}
+      className={composeClasses}
+      {...restProps}
+    />
+  )
 }
 
 export default Button

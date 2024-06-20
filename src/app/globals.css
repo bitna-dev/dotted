@@ -31,6 +31,7 @@ html {
 
 body {
   font-family: var(--font-family);
+  min-width: 480px;
 }
 a {
   color: inherit;
