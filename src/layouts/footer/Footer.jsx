@@ -1,7 +1,8 @@
 import React from 'react'
+import FooterClient from './FooterClient'
 
 const Footer = () => {
-  return <div>Footer</div>
+  return <FooterClient />
 }
 
 export default Footer

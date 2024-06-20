@@ -1,5 +1,11 @@
+import Footer from '@layouts/footer/Footer'
+
 const Home = () => {
-  return <div>Home</div>
+  return (
+    <>
+      <Footer />
+    </>
+  )
 }
 
 export default Home
